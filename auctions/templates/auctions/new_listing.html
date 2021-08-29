@@ -1,0 +1,14 @@
+{% extends "auctions/layout.html"%} {% block title %} New listing{% endblock%} {% block body %}
+<form action="{% url 'new_listing' %}" method="POST" enctype='multipart/form-data'>
+    {% csrf_token %}
+    <div class="form-data">
+        <input type="text" class="form-control" name="title" placeholder="title">
+        <input type="file" name="picture" id="">
+        <input type="text" class="form-control" name="category" placeholder="category">
+        <textarea name="description" class="form-control" id="" cols="30" rows="10" placeholder="Description"></textarea>
+        <input type="number" class="form-control" name="bid" id="" min="0" placeholder="Amount">
+        <button type="submit">submit</button>
+    </div>
+</form>
+
+{% endblock%}

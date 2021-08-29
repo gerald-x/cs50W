@@ -1,0 +1,37 @@
+{% extends "auctions/layout.html" %} {% block body %} {% for i in auctions %} {% for key, value in status.items %} {% if key == i.id|slugify and i.status == "active" %}
+
+<div class="photo">
+    <img src="{{i.picture.url}}" alt="">
+</div>
+<ul class="mt-3">
+    <a href="{% url 'auction' i.id %}">
+        <li class="p-2">{{i.title}}</li>
+    </a>
+    <a href="{% url 'categories' i.category %}">
+        <li class="p-2">{{i.category}}</li>
+    </a>
+</ul>
+
+<div class="ml-2 spacing">
+    <div class="p-2">{{i.description}}</div>
+    <h5 class="p-2">{{value}}</h5>
+</div>
+
+{% elif key == i.id|slugify and i.status == "closed" %}
+
+<div class="photo">
+    <img src="{{i.picture.url}}" alt="">
+</div>
+<ul class="mt-3">
+    <li class="p-2">{{i.title}}</li>
+    <li class="p-2">{{i.category}}</li>
+</ul>
+
+<div class="ml-2 spacing">
+    <div class="p-2">{{i.description}}</div>
+    <h5 class="p-2">{{value}}</h5>
+</div>
+
+{% endif %} {% endfor %} {% empty %}
+<p>You have no bids on any item</p>
+{% endfor %} {% endblock %}

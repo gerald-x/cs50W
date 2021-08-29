@@ -1,0 +1,51 @@
+{% extends "auctions/layout.html" %} {% block body %} {% if "message" %}
+<h5>{{ message }}</h5>
+{% endif %}
+
+<div class="photo">
+    <img src="{{auction.picture.url}}" alt="">
+</div>
+<ul>
+    <li class="p-2">{{auction.title}}</li>
+    <li class="p-2">{{auction.category}}</li>
+</ul>
+
+<div class="mb-5 ml-2">
+    <div class="p-2">{{auction.description}}</div>
+    <h5 class="p-2">£{{auction.start_bid}}</h5>
+</div>
+
+<form action="{% url 'add_watchlist' %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="item_id" value="{{auction.id}}">
+    <button type="submit">{{ button }}</button>
+</form>
+
+
+
+<p class="mt-5"><strong>{{ bid }}</strong></p>
+<form action="{% url 'bid' %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="item_id" value="{{auction.id}}">
+    <input type="number" name="bid_value" id="" min="{{ min_bid }}">
+    <button type="submit">Place bid</button>
+</form>
+
+
+<h5 class="mt-5 pt-3">Leave a comment</h5>
+<form action="{% url 'comment' %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="auction_id" value="{{ auction.id }}">
+    <textarea name="comment" id="" cols="30" rows="5"></textarea>
+    <button type="submit">Comment</button>
+</form>
+
+<h5 class="mt-4">Comments</h5>
+<ul>
+    {% for comment in comments %}
+    <li>{{comment}}</li>
+    {% empty %}
+    <li>No comments under this auction</li>
+    {% endfor %}
+</ul>
+{% endblock %}

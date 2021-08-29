@@ -1,0 +1,7 @@
+{% extends "auctions/layout.html" %} {% block body %}
+
+<p>{{message}}</p> <br><br>
+<p>To go back to home page <a href="{% url 'index' %}">click here</a></p><br><br>
+<p>To go back to bid page <a href="{% url 'auction' item_id %}">click here</a></p>
+
+{% endblock %}

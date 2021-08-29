@@ -1,0 +1,36 @@
+{% extends "auctions/layout.html" %} {% block body %} {% for i in auctions %}
+
+<div class="photo">
+    <img src="{{i.picture.url}}" alt="">
+</div>
+<ul>
+    <a href="{% url 'auction' i.id %}">
+        <li class="p-2">{{i.title}}</li>
+    </a>
+    <a href="{% url 'categories' i.category %}">
+        <li class="p-2">{{i.category}}</li>
+    </a>
+</ul>
+
+<div class="mb-4 ml-2">
+    <div class="p-2">{{i.description}}</div>
+    <h5 class="p-2">£{{i.start_bid}}</h5>
+</div>
+
+
+{% for key, values in bid_data.items %} {% if key == i.id|slugify %}
+<p>Max Bid: {{values.0}}</p>
+
+{% endif %} {% endfor %}
+
+<form action="{% url 'user_auctions' %}" method="POST" class="spacing">
+    {% csrf_token %}
+    <input type="hidden" name="auction_id" value="{{ i.id }}">
+    <button type="submit" class="btn btn-warning">Close bid</button>
+</form>
+
+{% empty %}
+
+<p>You have no items placed on auction.</p>
+
+{% endfor %} {% endblock %}
